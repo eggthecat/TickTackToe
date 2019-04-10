@@ -13,7 +13,7 @@ Board.prototype.getSpaceValue = function (squareId) {
   if (this.spaces[squareId]) {
     return this.spaces[squareId]
   }
-  return "-"
+  return "&nbsp;"
 };
 
 
@@ -35,15 +35,15 @@ function addEventHandlers(game, outputTable) {
   $("#board").on("click", "th", function() {
     var itemId = this.id
 
-    if (game.board.getSpaceValue(parseInt(itemId)) === "-") {
+    if (game.board.getSpaceValue(parseInt(itemId)) === "&nbsp;") {
 
     game.board.markSquare(itemId, game.oTurn);
     if (game.oTurn)  {
       $('body').clearQueue()
-      $('body').animate({"background-color" : "#FFEBCD"}, 2000);
+      $('body').animate({"background-color" : randomcolor()}, 2000);
     } else {
       $('body').clearQueue()
-      $('body').animate({"background-color" : "#a1b2ce"}, 2000);
+      $('body').animate({"background-color" : randomcolor()}, 2000);
     }
     game.oTurn = !game.oTurn
     updateBoard(game.board, outputTable)
@@ -77,11 +77,12 @@ function updateBoard(board, outputTable) {
     addEventHandlers(myGame, "#board");
   })
 
-  // if (stuff.inventory[i]) {
-    //   var inv = stuff.inventory[i]
-    //   items += "<tr id='item-" + inv.name + "'><th>" + inv.name +
-    //   "</th><th>" + inv.cost +
-    //   "</th><th>" + inv.weight +
-    //   "</th><th>" + inv.quantity + "</th>"
 
-    // }
+  var randomcolor = function()
+  {
+    var r = Math.round( Math.random() * 255);
+    var g = Math.round( Math.random() * 255);
+    var b = Math.round( Math.random() * 255);
+    var color = "rgb(" + r + ", " + g + ", " + b + ")"
+    return color;
+  }
