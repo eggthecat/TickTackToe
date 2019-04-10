@@ -15,19 +15,24 @@ table {
   height: 100px; */
   padding: 0px;
   margin: 0px;
-  width: 100%;
+  width: 500px;
   height: 100%;
   table-layout: fixed;
 }
 
 .container {
   padding: 50px;
-  color: skyblue;
   width: 500px;
   height: 500px;
-
 }
+
 
 .table-bordered {
   /* border-width: 10px; */
+}
+
+#gameWinner {
+  display: none;
+  text-align: center;
+  font-size: 100px;
 }
