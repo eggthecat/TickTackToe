@@ -8,9 +8,10 @@ function Game() {
 
 Game.prototype.getNextPlayer = function () {
   this.currentPlayer++;
-  if (this.currentPlayer > this.currentPlayer.length - 1) {
+  if (this.currentPlayer > this.players.length - 1) {
     this.currentPlayer = 0;
   }
+  return this.players[this.currentPlayer];
 };
 
 function Board() {
@@ -36,7 +37,7 @@ Board.prototype.markSquare = function (squareId, oTurn) {
 
 function Player(name, color) {
   if (!color){
-    color = randomcolor();
+    color = randomcolorS();
   }
   this.name = name;
   this.color = color;
@@ -57,6 +58,21 @@ Board.prototype.checkWin = function () {
   }
 };
 
+function changePlayer(game, outputTable) {
+  var player = game.getNextPlayer();
+
+  game.oTurn = !game.oTurn;
+  $('body').clearQueue()
+  console.log(player);
+  $('body').animate({"background-color" : player.color}, 200);
+  //$('#players').animate({"color" : player.color}, 500);
+  $('#players').text(player.name);
+
+  updateBoard(game.board, outputTable);
+}
+
+
+
 //UI Logic
 function addEventHandlers(game, outputTable) {
   $("#board").on("click", "th", function() {
@@ -64,15 +80,9 @@ function addEventHandlers(game, outputTable) {
 
     if (game.board.getSpaceValue(parseInt(itemId)) === "&nbsp;" &&
         game.board.gameWinner === "") {
-
+      console.log("works");
       game.board.markSquare(itemId, game.oTurn);
-      if (game.oTurn)  {
-        $('body').clearQueue()
-        $('body').animate({"background-color" : randomcolorS()}, 2000);
-      } else {
-        $('body').clearQueue()
-        $('body').animate({"background-color" : randomcolorS()}, 2000);
-      }
+
       if (game.board.checkWin()) {
         if (game.oTurn) {
           game.board.gameWinner = "O"
@@ -84,10 +94,7 @@ function addEventHandlers(game, outputTable) {
           $('#gameWinner').show("fade", 1000)
         }
       }
-      game.oTurn = !game.oTurn
-
-      updateBoard(game.board, outputTable)
-      //updateInventoryTable(carInventory, '#car-inventory');
+      changePlayer(game, outputTable);
     }
   });
 }
@@ -114,13 +121,15 @@ function updateBoard(board, outputTable) {
 var myGame = new Game();
 
 $(document).ready(function () {
-  myGame.players.push("Player 1")
-  myGame.players.push("Player 2")
+  myGame.players.push(new Player("Player 1"))
+  myGame.players.push(new Player("Player 2"))
   updateBoard(myGame.board, "#board")
   addEventHandlers(myGame, "#board");
 
   $("#reset-game").click(function(){
     myGame = new Game();
+    myGame.players.push(new Player("Player 1"))
+    myGame.players.push(new Player("Player 2"))
     $('#gameWinner').hide("fade", 1000)
     removeEvent();
     addEventHandlers(myGame, "#board");
