@@ -69,11 +69,11 @@ function addEventHandlers(game, outputTable) {
         if (game.oTurn) {
           game.board.gameWinner = "O"
           $('#gameWinner').text("O Wins!")
-          $('#gameWinner').toggle("fade", 1000)
+          $('#gameWinner').show("fade", 1000)
         } else {
           game.board.gameWinner = "X"
           $('#gameWinner').text("X Wins!")
-          $('#gameWinner').toggle("fade", 1000)
+          $('#gameWinner').show("fade", 1000)
         }
       }
       game.oTurn = !game.oTurn
@@ -112,7 +112,7 @@ $(document).ready(function () {
 
   $("#reset-game").click(function(){
     myGame = new Game();
-    $('#gameWinner').toggle("fade", 1000)
+    $('#gameWinner').hide("fade", 1000)
     removeEvent();
     addEventHandlers(myGame, "#board");
     updateBoard(myGame.board, "#board")
