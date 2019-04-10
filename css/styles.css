@@ -36,3 +36,10 @@ table {
   text-align: center;
   font-size: 100px;
 }
+
+#players {
+  /* position: fixed;
+  margin-left: 0%;
+  display: inline-block; */
+  font-size: 48px;
+}

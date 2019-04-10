@@ -1,9 +1,17 @@
 //Backend Logic
 function Game() {
-  this.board = new Board(),
-  this.players = [],
+  this.board = new Board();
+  this.players = [];
   this.oTurn = false
+  this.currentPlayer = 0;
 }
+
+Game.prototype.getNextPlayer = function () {
+  this.currentPlayer++;
+  if (this.currentPlayer > this.currentPlayer.length - 1) {
+    this.currentPlayer = 0;
+  }
+};
 
 function Board() {
   this.spaces = [],
@@ -60,10 +68,10 @@ function addEventHandlers(game, outputTable) {
       game.board.markSquare(itemId, game.oTurn);
       if (game.oTurn)  {
         $('body').clearQueue()
-        $('body').animate({"background-color" : randomcolor()}, 2000);
+        $('body').animate({"background-color" : randomcolorS()}, 2000);
       } else {
         $('body').clearQueue()
-        $('body').animate({"background-color" : randomcolor()}, 2000);
+        $('body').animate({"background-color" : randomcolorS()}, 2000);
       }
       if (game.board.checkWin()) {
         if (game.oTurn) {
@@ -77,6 +85,7 @@ function addEventHandlers(game, outputTable) {
         }
       }
       game.oTurn = !game.oTurn
+
       updateBoard(game.board, outputTable)
       //updateInventoryTable(carInventory, '#car-inventory');
     }
@@ -126,5 +135,14 @@ var randomcolor = function() {
   var g = Math.round( Math.random() * 255);
   var b = Math.round( Math.random() * 255);
   var color = "rgb(" + r + ", " + g + ", " + b + ")"
+  return color;
+}
+
+var randomcolorS = function() {
+  var h = Math.round( Math.random() * 360);
+
+  var color = "hsl(" + h + ", 50%, 80%)"
+  //hsl(360, 100%, 100%);
+  console.log(color);
   return color;
 }
