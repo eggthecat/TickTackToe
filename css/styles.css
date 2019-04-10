@@ -1,0 +1,15 @@
+th {
+  text-align:  center;
+  padding-top: 50px;
+  font-size: 28px;
+  line-height: 10;
+
+}
+
+.container {
+  padding: 50px;
+}
+
+.table-bordered {
+  border-width: 10px;
+}
