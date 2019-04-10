@@ -13,7 +13,7 @@ Board.prototype.getSpaceValue = function (squareId) {
   if (this.spaces[squareId]) {
     return this.spaces[squareId]
   } else {
-    return "#"
+    return "-"
   }
 };
 
@@ -32,9 +32,12 @@ function Player(name) {
 
 //UI Logic
 
-function addEventHandlers() {
-  $("#board").on("click", "tr", function() {
+function addEventHandlers(game, outputTable) {
+  $("#board").on("click", "th", function() {
     var itemId = this.id
+    game.board.markSquare(itemId, game.oTurn);
+    game.oTurn = !game.oTurn
+    updateBoard(game.board, outputTable)
     //updateInventoryTable(carInventory, '#car-inventory');
   });
 }
@@ -50,22 +53,9 @@ function updateBoard(board, outputTable) {
       items += "</tr>"
     }
   }
-  // items += "<tr>" + "<th id=" +
-  // <tr>
-  //   <th>O</th><th>X</th><th>O</th>
-  // </tr>
-  // <tr>
-  //   <th>O</th><th>X</th><th>O</th>
-  // </tr>
-  // <tr>
-  //   <th>O</th><th>X</th><th>O</th>
-  // </tr>
-  // for (var i = 0; i < stuff.inventory.length; i++) {
-    // }
     $(outputTable).empty();
     $(outputTable).html(items);
-    console.log(items);
-  }
+}
 
   var myGame;
 
@@ -74,6 +64,7 @@ function updateBoard(board, outputTable) {
     myGame.players.push("Player 1")
     myGame.players.push("Player 2")
     updateBoard(myGame.board, "#board")
+    addEventHandlers(myGame, "#board");
   })
 
   // if (stuff.inventory[i]) {
