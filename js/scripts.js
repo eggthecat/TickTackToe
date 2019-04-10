@@ -12,9 +12,8 @@ function Board() {
 Board.prototype.getSpaceValue = function (squareId) {
   if (this.spaces[squareId]) {
     return this.spaces[squareId]
-  } else {
-    return "-"
   }
+  return "-"
 };
 
 
@@ -35,10 +34,21 @@ function Player(name) {
 function addEventHandlers(game, outputTable) {
   $("#board").on("click", "th", function() {
     var itemId = this.id
+
+    if (game.board.getSpaceValue(parseInt(itemId)) === "-") {
+
     game.board.markSquare(itemId, game.oTurn);
+    if (game.oTurn)  {
+      $('body').clearQueue()
+      $('body').animate({"background-color" : "#FFEBCD"}, 2000);
+    } else {
+      $('body').clearQueue()
+      $('body').animate({"background-color" : "#a1b2ce"}, 2000);
+    }
     game.oTurn = !game.oTurn
     updateBoard(game.board, outputTable)
     //updateInventoryTable(carInventory, '#car-inventory');
+  }
   });
 }
 
