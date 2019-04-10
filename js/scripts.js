@@ -25,16 +25,17 @@ function Board() {
   this.gameWinner = ""
 }
 
-
+// This prototype checks for a value in a space to make sure it's empty.  On a spaces click it takes the ID of the clicked space and runs it though this function
 Board.prototype.getSpaceValue = function (squareId) {
-  // $('#reset-game').hide();
+// This is checking if there is a value to the squareId being checked, if there is any value it runs this
   if (this.spaces[squareId]) {
     return this.spaces[squareId]
   }
+// If there is no value in the space clicked it does this.
   return "&nbsp;"
 };
 
-
+// This prototype takes places an X or O in the clicked space
 Board.prototype.markSquare = function (squareId, oTurn) {
   if (oTurn) {
     this.spaces[squareId] = "O"
@@ -43,6 +44,7 @@ Board.prototype.markSquare = function (squareId, oTurn) {
   }
 };
 
+// This checks all the winning conditions on every click
 Board.prototype.checkWin = function () {
   var s = this.spaces;
   if ((s[0] && (s[0] === s[1] && s[1] === s[2])) ||
@@ -57,6 +59,7 @@ Board.prototype.checkWin = function () {
   }
 };
 
+// This constructor creates the game players (player 1 and player 2) and assings them a random background color.
 function Player(name, color) {
   if (!color){
     color = randomcolorS();
@@ -65,20 +68,20 @@ function Player(name, color) {
   this.color = color;
 }
 
+// This function
 function changePlayer(game, outputTable) {
+// This runs getNextPlayer to switch the players turns
   var player = game.getNextPlayer();
-
+// var oTurn is a true/false this changes its state
   game.oTurn = !game.oTurn;
-  $('body').clearQueue()
-  console.log(player);
   $('body').animate({"background-color" : player.color}, 200);
-  //$('#players').animate({"color" : player.color}, 500);
   $('#players').text(player.name);
-
+  console.log(outputTable);
   updateBoard(game.board, outputTable);
 }
 
 //UI Logic
+// This Listener runs on click
 function addEventHandlers(game, outputTable) {
   $("#board").on("click", "th", function() {
     var itemId = this.id
@@ -163,6 +166,5 @@ var randomcolorS = function() {
   var h = Math.round( Math.random() * 360);
   var color = "hsl(" + h + ", 50%, 80%)"
   //hsl(360, 100%, 100%);
-  console.log(color);
   return color;
 }
