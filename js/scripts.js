@@ -68,19 +68,19 @@ function Player(name, color) {
   this.color = color;
 }
 
+//UI Logic
+
 // This function
-function changePlayer(game, outputTable) {
+function changePlayer(game) {
 // This runs getNextPlayer to switch the players turns
   var player = game.getNextPlayer();
 // var oTurn is a true/false this changes its state
   game.oTurn = !game.oTurn;
   $('body').animate({"background-color" : player.color}, 200);
   $('#players').text(player.name);
-  console.log(outputTable);
-  updateBoard(game.board, outputTable);
+
 }
 
-//UI Logic
 // This Listener runs on click
 function addEventHandlers(game, outputTable) {
   $("#board").on("click", "th", function() {
@@ -105,7 +105,8 @@ function addEventHandlers(game, outputTable) {
         }
       }
 // If there is no winner it runs the changePlayer funciton
-      changePlayer(game, outputTable);
+      changePlayer(game);
+      updateBoard(game.board, outputTable);
     }
   });
 }
