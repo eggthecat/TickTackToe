@@ -17,7 +17,6 @@ _Tick Tack Toe Browser Game_
 |Discription|Input|Output|
 |-|-|-|
 |Take a click and place a letter in the square|User clicks square|Letter goes into box|  
-|
 
 ## Known Bugs
 
